@@ -23,12 +23,7 @@ export default function App() {
                 backgroundColor: '#fff',
               },
               headerLeft: (props) => <CoinsScreenLeft {...props} />,
-              headerRight: (props) => (
-                <CoinsScreenRight
-                  {...props}
-                  onPress={() => setModalVisible(true)}
-                />
-              ),
+              headerRight: (props) => <CoinsScreenRight {...props} />,
             }}
           />
         </Stack.Navigator>

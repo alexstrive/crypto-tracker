@@ -1,31 +1,32 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useAtom } from 'jotai';
+import { isModalVisibleAtom } from '../../atoms/modalPicker';
+import { selectedCoinsAtom } from '../../atoms/selectedCoins';
 
 const coinList = require('../../coins.json');
 
-export default function SelectCoinModal({ onModalAdd, visible }) {
-  const [selectedCoin, setSelectedCoin] = useState();
+export default function SelectCoinModal() {
   const [availableCoins, setAvailableCoins] = useState(coinList);
+  const [isModalVisible, setIsModalVisible] = useAtom(isModalVisibleAtom);
+  const [coins, setSelectedCoin] = useAtom(selectedCoinsAtom);
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={visible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
+      visible={isModalVisible}
+      onRequestClose={() => {}}
     >
       <View style={styles.modalView}>
         <Picker
-          selectedValue={selectedCoin}
           onValueChange={(itemValue, itemIndex) => {
-            setSelectedCoin(itemValue);
             setAvailableCoins(
               availableCoins.filter((coin) => coin.id !== itemValue.id)
             );
-            onModalAdd(itemValue);
+            setSelectedCoin([...coins, itemValue]);
+            setIsModalVisible(false);
           }}
         >
           {availableCoins.map((coin) => (

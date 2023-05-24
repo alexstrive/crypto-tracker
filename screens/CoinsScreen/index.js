@@ -1,10 +1,11 @@
 import { useAtom } from 'jotai';
 import CoinCard from './CoinCard';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { selectedCoins } from '../../atoms/selectedCoins';
+import { selectedCoinsAtom } from '../../atoms/selectedCoins';
+import SelectCoinModal from './SelectCoinModal';
 
 export default function CoinsScreen() {
-  const [coins, _] = useAtom(selectedCoins);
+  const [coins, _] = useAtom(selectedCoinsAtom);
 
   return (
     <View style={styles.container}>
@@ -13,6 +14,7 @@ export default function CoinsScreen() {
         renderItem={({ item }) => <CoinCard id={item.id} />}
         keyExtractor={(item) => item.id}
       />
+      <SelectCoinModal />
     </View>
   );
 }
